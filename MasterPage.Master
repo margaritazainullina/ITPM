@@ -1,0 +1,177 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="~/MasterPage.Master.cs"  %>
+
+<!DOCTYPE html>
+<script runat="server">
+
+    
+
+    protected void Login1_Authenticate(object sender, AuthenticateEventArgs e)
+    {
+        if (Session["UserAuthentication"] == null)
+        {
+            string username = Login1.UserName;
+            string pwd = Login1.Password;
+            string s;
+            s = @"Data Source=(LocalDB)\v11.0;AttachDbFilename=|DataDirectory|\Book_Share.mdf;Integrated Security=True";
+            System.Data.SqlClient.SqlConnection con = new System.Data.SqlClient.SqlConnection(s);
+            con.Open();
+            string sqlUserName;
+            sqlUserName = "SELECT login,password,rating  FROM [User] WHERE login ='" + username + "' AND password ='" + pwd + "'";
+            System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand(sqlUserName, con);
+            string CurrentName;
+            CurrentName = (string)cmd.ExecuteScalar();
+            if (CurrentName != null)
+            {
+                Session["UserAuthentication"] = username;
+                Session.Timeout = 1;
+                Login1.Visible = false;
+                StatusLb.Visible = false;
+                LoginName1.Visible = true;
+                LoginName1.FormatString = "Welcome, " + Session["UserAuthentication"].ToString();
+                Exit.Visible = true;
+                //если зашел админ
+                if (Session["UserAuthentication"].ToString().CompareTo("admin") == 0)
+                {
+                    AdminPanelButton.Visible = true;
+                }
+                else
+                {
+                    UserPanelButton.Visible = true; 
+                    //сделать отображение рейтинга
+                }
+                //Response.Redirect("Index.aspx");
+                Registration.Visible = false;
+            }
+            else
+            {
+                //Session["UserAuthentication"] = "";
+                StatusLb.Text = "Вы не зарегистрированы либо не верно ввели данные!!! Повторите ввод или нажмите кнопку регистрации";
+            }
+        }
+        else
+        {
+            Session.Timeout = 1;
+            Login1.Visible = false;
+            StatusLb.Visible = false;
+            LoginName1.Visible = true;
+            LoginName1.FormatString = "Welcome, " + Session["UserAuthentication"].ToString();
+        }
+    }
+
+    protected void Button1_Click(object sender, EventArgs e)
+    {
+        Login1.Visible = false;
+        StatusLb.Visible = false;
+        Response.Redirect("Start.aspx");
+    }
+
+    protected void Button2_Click(object sender, EventArgs e)
+    {
+        
+        Response.Redirect("AdminPanel.aspx");
+    }
+
+    protected void UserPanelButton_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("UserPanel.aspx");
+    }
+
+    protected void Exit_Click(object sender, EventArgs e)
+    {
+        Login1.Visible = true;
+        StatusLb.Visible = true;
+        Registration.Visible = true;
+        LoginName1.Visible = false;
+        Session["UserAuthentication"]=null;
+    }
+</script>
+
+
+
+
+<html>
+<head id="Head1" runat="server">
+    <link href="css/menu.css" rel="stylesheet" type="text/css" />
+    <link href="css/main.css" rel="stylesheet" type="text/css" />
+    <link href='http://fonts.googleapis.com/css?family=Poiret+One&subset=latin,cyrillic' rel='stylesheet' type='text/css' />
+    <link href='http://fonts.googleapis.com/css?family=Lobster&subset=cyrillic,latin' rel='stylesheet' type='text/css' />
+
+    <asp:ContentPlaceHolder ID="head" runat="server"></asp:ContentPlaceHolder>
+
+</head>
+<body>
+&nbsp;<form id="form1" runat="server">
+        <div id="allContent">
+            <asp:ContentPlaceHolder ID="HolderHeader" runat="server">
+                <div class="title">&nbsp;</div>
+            </asp:ContentPlaceHolder>
+
+            <div id="menu">
+                <asp:ContentPlaceHolder ID="HolderMenu" runat="server">
+                    <ul class="menu">
+                        <li><a href="#"><span>Главная</span></a></li>
+                        <li><a href="#"><span>Книги</span></a> </li>
+                        <li><a href="#"><span>Поиск</span></a> </li>
+                        <li></li>
+                    </ul>
+                </asp:ContentPlaceHolder>
+            </div>
+
+            <div class="wrapper">
+
+                <div class="content">
+                    <div class="contentTitle">
+                        <asp:ContentPlaceHolder ID="contentTitlePlaceHolder" runat="server"></asp:ContentPlaceHolder>
+                    </div>
+                    <asp:ContentPlaceHolder ID="contentPlaceHolder" runat="server">
+                        <asp:SqlDataSource ID="SqlDataSource1" runat="server"></asp:SqlDataSource>
+                    </asp:ContentPlaceHolder>
+                </div>
+
+                <div class="sidePanel">
+
+                    <div class="sidePanelСontent">
+                        <div class="sidePanelTitle">
+                            <asp:ContentPlaceHolder ID="sidePanelTitleContentPlaceHolder" runat="server">
+                            </asp:ContentPlaceHolder>
+                        </div>
+                        <br />
+                        <br />
+                        
+                        <asp:LoginName ID="LoginName1" runat="server"  FormatString ="Welcome, {0}" Visible="False" />
+                        
+                        <asp:Label ID="StatusLb" runat="server" Width="300">Пожалуйста, авторизуйтесь</asp:Label><br />
+                        <asp:Button ID="Registration" runat="server" OnClick="Button1_Click" Text="Регистрация" />
+                        <asp:Button ID="AdminPanelButton" runat="server" OnClick="Button2_Click" Text="Панель управления" Visible="False" />
+                        <br />
+                        <asp:Button ID="UserPanelButton" runat="server" Text="Мой профиль" Visible="False" OnClick="UserPanelButton_Click" />
+                        <br />
+                        <asp:Button ID="Exit" runat="server" Text="Выход" Visible="False" OnClick="Exit_Click" />
+                        <br />
+                        <asp:Label ID="ErrorLb" runat="server" Width="300" ForeColor="Red"></asp:Label><br />
+
+                        <asp:Login ID="Login1" runat="server" Height="192px" Style="font-size: medium" Width="308px" 
+onauthenticate="Login1_Authenticate">
+</asp:Login>
+                        <br />
+                        <br />
+                        <hr />
+                       
+                           <br />
+
+                        <asp:ContentPlaceHolder ID="sidePanelContentPlaceHolder" runat="server"></asp:ContentPlaceHolder>
+                    </div>
+                </div>
+
+            </div>
+
+            <asp:ContentPlaceHolder ID="FooterPlaceHolder" runat="server">
+                <footer>
+                    <div class="footerContent">
+                    </div>
+                </footer>
+            </asp:ContentPlaceHolder>
+        </div>
+    </form>
+</body>
+</html>
