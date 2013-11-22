@@ -72,13 +72,13 @@ public partial class Start : System.Web.UI.Page
 
     }
 
-    protected void FileUpload1_Load(object sender, EventArgs e)
+    protected void FileUpload1_Load1(object sender, EventArgs e)
     {
         if (FileUpload1.HasFile)
             try
             {
-                String curPath1 = Server.MapPath("Data");
-                String curPath = "img\\users\\";
+                String curPath1 = Server.MapPath("img");
+                String curPath = curPath1 + "\\users\\" + FileUpload1.FileName;
                 FileUpload1.SaveAs(curPath);
 
                 Label1.Text = "Имя: " +
@@ -88,7 +88,7 @@ public partial class Start : System.Web.UI.Page
                      FileUpload1.PostedFile.ContentType;
                 FileUpload1.SaveAs(curPath);
 
-                ViewState["pathToPhoto"] = FileUpload1.FileName;
+                userPhoto.ImageUrl = "img\\users\\" + FileUpload1.FileName; 
             }
             catch (Exception ex)
             {
