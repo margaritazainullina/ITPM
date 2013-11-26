@@ -133,6 +133,7 @@
 
     protected void Exit_Click(object sender, EventArgs e)
     {
+        Response.Redirect("Index.aspx");
         Login1.Visible = true;
         StatusLb.Visible = true;
         Registration.Visible = true;

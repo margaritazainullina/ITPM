@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -12,54 +13,54 @@ public partial class AdminPanel : System.Web.UI.Page
     {try{
         if (Session["UserAuthentication"].ToString().CompareTo("admin") == 0)
         {
+            LoginName LoginName1 = Master.FindControl("LoginName1") as LoginName;
+            LoginName1.Visible = true;
+            LoginName1.FormatString = "Welcome, " + Session["UserAuthentication"].ToString();
+            Label Rating = Master.FindControl("Rating") as Label;
+            Rating.Visible = true;
+            Rating.Text = "Ваш рейтинг=" + 1000;
+            Button Exit = Master.FindControl("Exit") as Button;
+            Exit.Visible = true;
+            Label StatusLb = Master.FindControl("StatusLb") as Label;
+            StatusLb.Visible = false;
+            Button AdminPanelButton = Master.FindControl("AdminPanelButton") as Button;
+            AdminPanelButton.Visible = true;
+            Login Login1 = Master.FindControl("Login1") as Login;
+            Login1.Visible = false;
+            Button Registration = Master.FindControl("Registration") as Button;
+            Registration.Visible = false;
+
             string strSQLconnection = @"Data Source=(LocalDB)\v11.0;AttachDbFilename=|DataDirectory|\Book_Share.mdf;Integrated Security=True";
             SqlConnection Conn = new SqlConnection(strSQLconnection);
-
-            SqlDataReader rdr = null;
-            string commandString = "SELECT login,email,confirm FROM [User] where (confirm=0)";
-
-            try
-            {
-                Conn.Open();
-                SqlCommand Cmd = new SqlCommand(commandString, Conn);
-                rdr = Cmd.ExecuteReader();
-
-                GridView1.DataSource = rdr;
-                GridView1.DataBind();
-                if (GridView1.Rows.Count == 0)
-                    Label1.Text = "Нет незарегистрированных пользователей";
-                rdr = null;
-                commandString = "SELECT category FROM [category] ";
-                Cmd = new SqlCommand(commandString, Conn);
-                rdr = Cmd.ExecuteReader();
-                ParentCatList.DataSource = rdr;
-                ParentCatList.DataBind();
-                rdr = null;
-                commandString = "SELECT category,parent_cat FROM [category] ";
-                Cmd = new SqlCommand(commandString, Conn);
-                rdr = Cmd.ExecuteReader();
-                Categories.DataSource = rdr;
-                Categories.DataBind();
-                Response.Redirect("AdminPanel.aspx");
-            }
-            catch (Exception ex)
-            {
-                // Log error
-            }
-            finally
-            {
-                if (rdr != null)
-                {
-                    rdr.Close();
-                }
-                if (Conn != null)
-                {
-                    Conn.Close();
-                }
-            }
+            SqlCommand commandString = new SqlCommand("SELECT login, email, confirm FROM [User] where confirm=0",Conn);
+            SqlDataAdapter da = new SqlDataAdapter(commandString);
+            DataSet ds = new DataSet();
+            da.Fill(ds);
+            GridView1.DataSource = ds;
+            GridView1.DataBind(); 
+         
+            
+            //    commandString = "SELECT category FROM [category] ";
+            //    Cmd = new SqlCommand(commandString, Conn);
+            //    rdr = Cmd.ExecuteReader();
+            //    ParentCatList.DataSource = rdr;
+            //    ParentCatList.DataBind();
+            //    rdr.Close();
+            //    rdr = null;
+            //    commandString = "SELECT category, parent_cat FROM [category] ";
+            //    Cmd = new SqlCommand(commandString, Conn);
+            //    rdr = Cmd.ExecuteReader();
+            //    Categories.DataSource = rdr;
+            //    Categories.DataBind();
+            //    rdr.Close();
+            //    //Response.Redirect("AdminPanel.aspx");
+            
+            
+            
         }
+        else throw new Exception();
     }
-        catch
+    catch (Exception ex)
         {
             Response.Redirect("Index.aspx");
         }

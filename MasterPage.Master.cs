@@ -12,7 +12,23 @@ namespace Lab1
        
         protected void Page_Load(object sender, EventArgs e)
         {
-         
+            if (Session["UserAuthentication"] == null)
+            {
+                
+                LoginName1.Visible = false;
+                Rating.Visible = false;
+                StatusLb.Visible = true;
+                Login1.Visible = true;
+                
+            }
+            else
+            {
+                LoginName1.Visible = true;
+                Rating.Visible = true;
+                StatusLb.Visible = false;
+                AdminPanelButton.Visible = true;
+                AdminPanelButton.Visible = true;
+            }
         }
 
 
