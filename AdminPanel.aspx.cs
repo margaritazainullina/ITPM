@@ -37,21 +37,31 @@ public partial class AdminPanel : System.Web.UI.Page
             DataSet ds = new DataSet();
             da.Fill(ds);
             GridView1.DataSource = ds;
-            GridView1.DataBind(); 
-         
+            GridView1.DataBind();
+
+            commandString = new SqlCommand("SELECT category FROM [category] ", Conn);
+            da = new SqlDataAdapter(commandString);
+            ds = new DataSet();
+            da.Fill(ds);
+
+            if (ParentCatList.Text == "")
+            {
+                ParentCatList.DataTextField = ds.Tables[0].Columns["category"].ToString();
+                ParentCatList.DataValueField = ds.Tables[0].Columns["category"].ToString();
+                ParentCatList.DataSource = ds.Tables[0];
+                ParentCatList.DataBind();
+                ParentCatList.Text = "";
+            }
             
-            //    commandString = "SELECT category FROM [category] ";
-            //    Cmd = new SqlCommand(commandString, Conn);
-            //    rdr = Cmd.ExecuteReader();
-            //    ParentCatList.DataSource = rdr;
-            //    ParentCatList.DataBind();
-            //    rdr.Close();
-            //    rdr = null;
-            //    commandString = "SELECT category, parent_cat FROM [category] ";
-            //    Cmd = new SqlCommand(commandString, Conn);
-            //    rdr = Cmd.ExecuteReader();
-            //    Categories.DataSource = rdr;
-            //    Categories.DataBind();
+            
+            
+
+            commandString = new SqlCommand("SELECT category, parent_cat FROM [category] ", Conn);
+            da = new SqlDataAdapter(commandString);
+            ds = new DataSet();
+            da.Fill(ds);
+           Categories.DataSource = ds;
+            Categories.DataBind();
             //    rdr.Close();
             //    //Response.Redirect("AdminPanel.aspx");
             
@@ -106,6 +116,7 @@ public partial class AdminPanel : System.Web.UI.Page
         GridView1.EditIndex = -1;
         GridView1.DataBind();
     }
+
     protected void AddCateg_Click(object sender, EventArgs e)
     {
         string strSQLconnection = @"Data Source=(LocalDB)\v11.0;AttachDbFilename=|DataDirectory|\Book_Share.mdf;Integrated Security=True";
@@ -113,9 +124,27 @@ public partial class AdminPanel : System.Web.UI.Page
         Conn.Open();
         SqlDataReader rdr = null;
         string sqlUserName;
-        sqlUserName = "INSERT INTO [category] (category, parent_cat) VALUES ('" + CatName.Text + "','" + ParentCatList.Text + "')";
+        sqlUserName = "INSERT INTO [category] (category, parent_cat) VALUES (N'" + CatName.Text + "',N'" + ParentCatList.Text + "')";
         System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand(sqlUserName, Conn);
         cmd.ExecuteScalar();
         Response.Redirect("AdminPanel.aspx");
+    }
+    protected void Categories_RowDeleting(object sender, GridViewDeleteEventArgs e)
+    {
+        string strSQLconnection = @"Data Source=(LocalDB)\v11.0;AttachDbFilename=|DataDirectory|\Book_Share.mdf;Integrated Security=True";
+        SqlConnection Conn = new SqlConnection(strSQLconnection);
+        Conn.Open();
+
+        TableCell lid = Categories.Rows[e.RowIndex].Cells[1];
+        String strsession1 = "delete from [category] where category='" + lid.Text + "'";
+        SqlCommand cmd = new SqlCommand(strsession1, Conn);
+        cmd.ExecuteNonQuery();
+        Conn.Close();
+        Response.Redirect("AdminPanel.aspx");
+    }
+
+    protected void ParentCatList_SelectedIndexChanged(object sender, EventArgs e)
+    {
+
     }
 }

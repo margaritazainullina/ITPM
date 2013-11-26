@@ -23,7 +23,7 @@
         <asp:Image ID="userPhoto" runat="server" Height="120px" Width="141px" />
         <asp:Label ID="Label1" runat="server"></asp:Label>
         <asp:FileUpload ID="FileUpload1" runat="server"/>
-        <asp:Button ID="Button1" OnClick="FileUpload1_Load1" runat="server" />
+        <asp:Button ID="Button1" OnClick="FileUpload1_Load1" Width="100px"  runat="server" />
 
 
 

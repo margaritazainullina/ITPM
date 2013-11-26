@@ -15,13 +15,7 @@ public partial class Start : System.Web.UI.Page
     }
     protected void CreateUserWizard1_CreatedUser(object sender, EventArgs e)
     {
-        string s;
-        s = @"Data Source=(LocalDB)\v11.0;AttachDbFilename=|DataDirectory|\Book_Share.mdf;Integrated Security=True";
-        System.Data.SqlClient.SqlConnection con = new System.Data.SqlClient.SqlConnection(s);
-        con.Open();
-        string sqlUserName;
-        sqlUserName = "INSERT INTO [User] (Id_user, name, login, password, email, rating) VALUES (23,'"+CreateUserWizard1.UserName+"','"+CreateUserWizard1.LoginCreatedUser+"','"+CreateUserWizard1.Password+"','"+CreateUserWizard1.Email+"',10)";
-        System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand(sqlUserName, con);
+        
        
     }
     protected void CreateUserWizard1_CreatingUser(object sender, LoginCancelEventArgs e)
@@ -36,12 +30,16 @@ public partial class Start : System.Web.UI.Page
             
              if ((IsValidEmail(CreateUserWizard1.Email) ))
             {string sqlUserName;
-            sqlUserName = "INSERT INTO [User] (name, login, password, email, rating, confirm) VALUES ('" + CreateUserWizard1.UserName + "','" + CreateUserWizard1.UserName + "','" + CreateUserWizard1.Password + "','" + CreateUserWizard1.Email + "',10,0)";
+            sqlUserName = "INSERT INTO [User] (name, login, password, email, rating, confirm,photo) VALUES ('" + CreateUserWizard1.UserName + "','" + CreateUserWizard1.UserName + "','" + CreateUserWizard1.Password + "','" + CreateUserWizard1.Email + "',10,0,'" + userPhoto.ImageUrl + "')";
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand(sqlUserName, con);
             cmd.ExecuteScalar();
                 CreateUserWizard1.Visible = false;
                 Status.Visible = true;
-                Status.Text = "Спасибо за регистрацию! Ждите подтверждения на свой email";
+                userPhoto.Visible = false;
+                Button1.Visible = false;
+                FileUpload1.Visible = false;
+                Label1.Visible = false;
+                Status.Text = "Спасибо за регистрацию! Ждите подтверждения администратора";
             }
             else throw new Exception();
         }

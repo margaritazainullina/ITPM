@@ -24,14 +24,10 @@
 
     protected void Login1_Authenticate(object sender, AuthenticateEventArgs e)
     {
-        if (Session["UserAuthentication"] == null)
-        {
+       
             string username = Login1.UserName;
             string pwd = Login1.Password;
             string s;
-
-           
-            
             s = @"Data Source=(LocalDB)\v11.0;AttachDbFilename=|DataDirectory|\Book_Share.mdf;Integrated Security=True";
             System.Data.SqlClient.SqlConnection con = new System.Data.SqlClient.SqlConnection(s);
             con.Open();
@@ -40,6 +36,7 @@
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand(sqlUserName, con);
             string CurrentName;
             CurrentName = (string)cmd.ExecuteScalar();
+        // пользователь есть в бд    
             if (CurrentName != null)
             {
                 Session["UserAuthentication"] = username;
@@ -49,41 +46,7 @@
                 LoginName1.Visible = true;
                 LoginName1.FormatString = "Welcome, " + Session["UserAuthentication"].ToString();
                 Exit.Visible = true;
-                //если зашел админ
-                if (Session["UserAuthentication"].ToString().CompareTo("admin") == 0)
-                {
-                    AdminPanelButton.Visible = true;
-                }
-                else
-                {
-                    UserPanelButton.Visible = true; 
-                    //сделать отображение рейтинга
-                     sqlUserName = "rating FROM [User] WHERE login ='" + username;
-            cmd = new System.Data.SqlClient.SqlCommand(sqlUserName, con);
-            CurrentName = (string)cmd.ExecuteScalar();
-            if (CurrentName != null)
-            {
-
-                Rating.Text = CurrentName;
-                Exit.Visible = true;
-                }
-                //Response.Redirect("Index.aspx");
                 Registration.Visible = false;
-            }
-            
-            
-                //Session["UserAuthentication"] = "";
-                StatusLb.Text = "Вы не зарегистрированы либо не верно ввели данные!!! Повторите ввод или нажмите кнопку регистрации";
-            }
-            sqlUserName = "Select rating FROM [User] WHERE login ='" + username+"'";
-            cmd = new System.Data.SqlClient.SqlCommand(sqlUserName, con);
-            int rating= (int)cmd.ExecuteScalar();
-            if (rating != null)
-            {
-
-                Rating.Text ="Ваш рейтинг="+rating;
-                Rating.Visible = true;
-                Exit.Visible = true;
                 //если зашел админ
                 if (Session["UserAuthentication"].ToString().CompareTo("admin") == 0)
                 {
@@ -92,25 +55,25 @@
                 else
                 {
                     UserPanelButton.Visible = true;
-                    //сделать отображение рейтинга
                 }
-                //Response.Redirect("Index.aspx");
-                Registration.Visible = false;
+                //сделать отображение рейтинга
+                sqlUserName = "Select rating FROM [User] WHERE login ='" + username + "'";
+                cmd = new System.Data.SqlClient.SqlCommand(sqlUserName, con);
+                CurrentName = Convert.ToString(cmd.ExecuteScalar());
+                if (CurrentName != null)
+                {
+                    Rating.Text = "Ваш рейтинг=" + CurrentName;
+                    Rating.Visible = true;
+                }
             }
+
             else
             {
                 //Session["UserAuthentication"] = "";
                 StatusLb.Text = "Вы не зарегистрированы либо не верно ввели данные!!! Повторите ввод или нажмите кнопку регистрации";
             }
-        }
-        else
-        {
-            Session.Timeout = 1;
-            Login1.Visible = false;
-            StatusLb.Visible = false;
-            LoginName1.Visible = true;
-            LoginName1.FormatString = "Welcome, " + Session["UserAuthentication"].ToString();
-        }
+        
+       
     }
 
     protected void Button1_Click(object sender, EventArgs e)
@@ -133,13 +96,14 @@
 
     protected void Exit_Click(object sender, EventArgs e)
     {
-        Response.Redirect("Index.aspx");
+        
         Login1.Visible = true;
         StatusLb.Visible = true;
         Registration.Visible = true;
         LoginName1.Visible = false;
         Rating.Visible = false;
         Session["UserAuthentication"]=null;
+        Response.Redirect("Index.aspx");
     }
 </script>
 
@@ -166,9 +130,9 @@
             <div id="menu">
                 <asp:ContentPlaceHolder ID="HolderMenu" runat="server">
                     <ul class="menu">
-                        <li><a href="#"><span>Главная</span></a></li>
-                        <li><a href="#"><span>Книги</span></a> </li>
-                        <li><a href="#"><span>Поиск</span></a> </li>
+                        <li><a href="Index.aspx"><span>Главная</span></a></li>
+                        <li><a href="Books.aspx"><span>Книги</span></a> </li>
+                        <li><a href="Search.aspx"><span>Поиск</span></a> </li>
                         <li></li>
                     </ul>
                 </asp:ContentPlaceHolder>
