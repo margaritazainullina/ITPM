@@ -120,4 +120,8 @@ public partial class UserPanel : System.Web.UI.Page
         }
         //Response.Redirect("UserPanel.aspx");
     }
+    protected void Download0_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("AddBook.aspx");
+    }
 }

@@ -36,7 +36,7 @@
         <asp:ListBox ID="ListBooks" runat="server"></asp:ListBox>
         <br />
         <br />
-        <asp:Button ID="Download0" runat="server" Text="Загрузить новую" />
+        <asp:Button ID="Download0" runat="server" Text="Загрузить новую" OnClick="Download0_Click" />
 
     </div>
  
