@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -38,10 +40,55 @@ public partial class Books : System.Web.UI.Page
             Button Registration = Master.FindControl("Registration") as Button;
             Registration.Visible = false;
 
+
+            //----
+            string strSQLconnection = @"Data Source=(LocalDB)\v11.0;AttachDbFilename=|DataDirectory|\Book_Share.mdf;Integrated Security=True";
+            SqlConnection Conn = new SqlConnection(strSQLconnection);
+            SqlCommand commandString = new SqlCommand("SELECT * FROM [category] ", Conn);
+            SqlDataAdapter da = new SqlDataAdapter(commandString);
+            DataSet ds = new DataSet();
+            da.Fill(ds);
+            // GridView1.DataSource = ds;
+            //GridView1.DataBind();
+
+
+            int i = 0;
+            String[,] categories = new String[ds.Tables[0].Rows.Count, 2];
+            foreach (System.Data.DataRow tr in ds.Tables[0].Rows)
+            {
+                categories[i, 0] = tr[1].ToString();
+                categories[i, 1] = tr[2].ToString();
+                i++;
+            }
+
+
+            //корневой элемент Root
+            Category root = new Category("", null);
+
+            //переводим массив в дерево
+            for (int j = 0; j < categories.GetLength(0); j++)
+            {
+                root.add(categories[j, 0], categories[j, 1], root);
+            }
+
+            String path = Server.MapPath("xml");
+
+            using (System.IO.StreamWriter file = new System.IO.StreamWriter(path+"//categories.xml"))
+            {
+                file.WriteLine(root.print(root));
+            }
         }
+
+
+
+
         else
         {
             Response.Redirect("Index.aspx");
         }
+
     }
+
+
+
 }

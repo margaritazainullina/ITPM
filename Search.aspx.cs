@@ -72,7 +72,7 @@ public partial class Search : System.Web.UI.Page
 
         string strSQLconnection = @"Data Source=(LocalDB)\v11.0;AttachDbFilename=|DataDirectory|\Book_Share.mdf;Integrated Security=True";
         SqlConnection Conn = new SqlConnection(strSQLconnection);
-        SqlCommand commandString = new SqlCommand("SELECT name, author, publishing, FROM [User] where confirm=0", Conn);
+        SqlCommand commandString = new SqlCommand("SELECT [Book].name,[Book].publishing,[Book].author, [Book].book_url  FROM [Book] INNER JOIN ([User] INNER JOIN ([Book_user] INNER JOIN ([category] INNER JOIN [Book_category] ON [category].Id_category = [Book_category].id_category) ON [Book_user].book_idbook = [Book_category].id_book) ON [User].Id_user= [Book_user].user_iduser) ON [Book].Id_book= [Book_user].book_idbook WHERE ((Book_category.id_category=" + CurrentCategory + ") And ([Book].publishing like '%" + Publishing.Text + "%')And ([Book].author like '%" + Author.Text + "%') And ([Book].name like '%" + Name.Text + "%'));", Conn);
         SqlDataAdapter da = new SqlDataAdapter(commandString);
         DataSet ds = new DataSet();
         da.Fill(ds);
