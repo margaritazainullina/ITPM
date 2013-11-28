@@ -1,6 +1,7 @@
 ﻿* {
     margin: 0;
     padding: 0;
+    font-family: 'Segoe UI Light';
 }
 
 #menu {
@@ -15,68 +16,84 @@ body {
 
 .content {
     padding: 5%;
-    border-radius: 0 0 20px 20px;
+    border-radius: 0 0 15px 15px;
     margin: 0 2%;
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: rgba(0, 0, 0, 0.44);
     color: white;
-    font-family: 'Poiret One', cursive;
+    font-family: 'Segoe UI Light';
+    font-size: large;
     width: 55%;
-    border: 7px rgba(202, 170, 67, 1) dotted;
+    border: 5px rgb(179, 144, 82) dotted;
 }
 
+select {
+    width: 100%;
+}
+
+.simple {
+    color: white;
+    font-family: 'Segoe UI Light';
+    font-size: medium;
+}
+
+a {
+    color: rgb(255, 184, 0); /* Цвет ссылок */
+}
+
+    a:visited {
+        color: rgb(204, 150, 9); /* Цвет посещенных ссылок */
+    }
+
+    a:active {
+        color: rgb(255, 233, 176); /* Цвет активных ссылок */
+    }
 
 .title {
-    font-size: 46px;
-    color: rgb(233, 165, 44);
+    font-size: 48px;
+    color: rgb(255, 230, 186);
     font-family: 'Lobster', cursive;
     -webkit-text-stroke: 1px black;
     text-align: center;
 }
 
 footer {
-    height: 20%;
-    font-family: 'Poiret One', cursive;
-    width: 100%;
-    background: -webkit-linear-gradient(top, rgba(180, 148, 21, 0.53), rgba(139, 95, 18, 0.97) 100%);
-    border-top: 7px rgba(170, 137, 34, 0.7) solid;
-    padding: 2% 0%;
+    background: url(../img/menu.png) repeat-x 0 center;
 }
 
 .footerContent {
-    font-size: 18px;
-    color: rgb(61, 32, 2);
-    padding: 2%;
-    font-family: 'Poiret One', cursive;
+    font-size: small;
+    color: rgb(61, 59, 56);
+    padding-left: 2%;
+    text-align: center;
+    padding: 10px;
 }
 
 .wrapper {
     margin: 0;
-    background: rgba(88, 88, 88, 0.6);
-    margin-bottom:20px;
+    background: rgba(255, 255, 255, 0.6);
+    padding-bottom: 20%;
 }
 
 .sidePanel {
-    width: 25%;
+    margin-top: 165px;
+    top: 0px;
     margin-left: 70%;
-    margin-top: 150px;
-    background-color: rgba(0, 0, 0, 0.3);
     float: right;
     position: absolute;
-    top: -20px;
-    border-radius: 20px;
-    height: 280px;
-    left: 8px;
-    border: 7px rgba(202, 170, 67, 1) dotted;
+    border-radius: 15px;
+    background-color: rgba(0, 0, 0, 0.44);
+    font-family: 'Segoe UI Light';
+    border: 5px rgb(179, 144, 82) dotted;
+}
+
+input {
+    padding: 0 2px;
+    font-size: medium;
 }
 
 .sidePanelСontent {
     color: white;
-    font-family: 'Poiret One', cursive;
     padding: 5%;
-    border-radius: 0 0 20px 20px;
-    margin: 2%;
-    color: white;
-    top: -400px;
 }
 
 .sidePanelTitle {

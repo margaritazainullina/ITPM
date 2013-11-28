@@ -8,7 +8,7 @@
 </asp:Content>
 
 <asp:Content ID="content" ContentPlaceHolderID="contentPlaceHolder" runat="server">
-
+    <div class="contentTitle">Здравствуйте!</div>
     <div>
         <asp:Label ID="Status" runat="server" Text="Label" Visible="False"></asp:Label>
         <asp:CreateUserWizard ID="CreateUserWizard1" runat="server" OnCreatingUser="CreateUserWizard1_CreatingUser" MembershipProvider="accountingProvider" OnCreateUserError="CreateUserWizard1_CreateUserError">

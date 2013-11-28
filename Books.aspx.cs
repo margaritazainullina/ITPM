@@ -73,11 +73,11 @@ public partial class Books : System.Web.UI.Page
 
             String path = Server.MapPath("xml");
 
-            using (System.IO.StreamWriter file = new System.IO.StreamWriter(path+"//categories.xml"))
+            using (System.IO.StreamWriter file = new System.IO.StreamWriter(path + "//categories.xml"))
             {
                 file.WriteLine(root.print(root));
             }
-            if (DetailsView1.Rows.Count>0)
+            if (DetailsView1.Rows.Count > 0)
                 LinkButton1.Visible = true;
             else
                 LinkButton1.Visible = false;
@@ -116,7 +116,7 @@ public partial class Books : System.Web.UI.Page
             GridView1.DataSource = ds;
             GridView1.DataSourceID = "";
             GridView1.DataBind();
-           
+
         }
     }
     protected void LinkButton1_Click(object sender, EventArgs e)

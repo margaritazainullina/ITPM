@@ -32,14 +32,6 @@ public class Category
  
     public String print(Category root)
     {
-        //вместо Console.WriteLine(root.name + " - " + root.parent);
-        //запрос
-        //select book.name, book.author, book.publishing, book.info 
-        //from book, book_category, category 
-        //where book.Id_book=book_category.id_book 
-        //and category.id_category=book_category.id_category
-        //and category.category=root
-
         if (root.name == "")
         {
             xml += "<Все_книги_сайта>";
@@ -52,7 +44,8 @@ public class Category
         }
         if (root.name == "") xml += "</Все_книги_сайта>"; 
         else xml += "</" + root.name + ">";
-        return xml;
+        //some magic
+        return xml.Replace("<Все_книги_сайта></Все_книги_сайта>","");     
     }
 
 

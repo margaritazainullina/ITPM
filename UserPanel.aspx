@@ -5,10 +5,10 @@
     <meta name="description" content=" Сторінка, яка використовує майстер сторінок" />
     <meta charset="utf-8" />
 
-</asp:Content>  
+</asp:Content>
 
 <asp:Content ID="content" ContentPlaceHolderID="contentPlaceHolder" runat="server">
-    
+    <div class="contentTitle">Мой профиль</div>
     <div>
         <asp:Label ID="Status" runat="server"></asp:Label>
         <br />
@@ -20,16 +20,31 @@
         <br />
         <asp:Button ID="Download" runat="server" Text="Загрузить" OnClick="FileUpload1_Load" />
         <br />
-        <asp:Label ID="LblName" runat="server" Text="Имя"></asp:Label>
-        <asp:TextBox ID="NameText" runat="server"></asp:TextBox>
-        <br />
-        <asp:Label ID="LblEmail" runat="server" Text="Email"></asp:Label>
-        <asp:TextBox ID="EmailText" runat="server"></asp:TextBox>
-        <br />
-        <asp:Label ID="LblPassword" runat="server" Text="Пароль"></asp:Label>
-        <asp:TextBox ID="Password1" runat="server" TextMode="Password"></asp:TextBox><br />
-        <asp:Button ID="Save" runat="server" Text="Сохранить" OnClick="Save_Click" />
+        <table>
+            <tr>
+                <td>
+                    <asp:Label ID="LblName" runat="server" Text="Имя"></asp:Label></td>
+                <td>
+                    <asp:TextBox ID="NameText" runat="server"></asp:TextBox></td>
+            </tr>
+            <tr>
+                <td>
+                    <asp:Label ID="LblEmail" runat="server" Text="Email"></asp:Label></td>
+                <td>
+                    <asp:TextBox ID="EmailText" runat="server"></asp:TextBox></td>
+            </tr>
+            <tr>
+                <td>
+                    <asp:Label ID="LblPassword" runat="server" Text="Пароль"></asp:Label></td>
+                <td>
+                    <asp:TextBox ID="Password1" runat="server" TextMode="Password"></asp:TextBox></td>
+            </tr>
+            <tr>
+                <td>
+                    <asp:Button ID="Save" runat="server" Text="Сохранить" OnClick="Save_Click" /></td>
+            </tr>
 
+        </table>
         <br />
         <asp:Label ID="Label2" runat="server" Text="Загруженные книги"></asp:Label>
         <br />
@@ -39,6 +54,6 @@
         <asp:Button ID="Download0" runat="server" Text="Загрузить новую" OnClick="Download0_Click" />
 
     </div>
- 
 
-</asp:Content> 
+
+</asp:Content>

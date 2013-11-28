@@ -9,7 +9,7 @@
 </asp:Content>  
 
 <asp:Content ID="content" ContentPlaceHolderID="contentPlaceHolder" runat="server">
-    
+    <div class="contentTitle">Здравствуйте!</div>
     <div>
         <asp:Label ID="TxtLabel" runat="server"></asp:Label>
     </div>

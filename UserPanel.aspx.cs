@@ -54,7 +54,7 @@ public partial class UserPanel : System.Web.UI.Page
             Login1.Visible = false;
             Button Registration = Master.FindControl("Registration") as Button;
             Registration.Visible = false;
-            Status.Text = "Мой профиль";
+           // Status.Text = "Мой профиль";
             sqlUserName = "Select Id_user FROM [User] WHERE login ='" + Session["UserAuthentication"].ToString() + "'";
             cmd = new System.Data.SqlClient.SqlCommand(sqlUserName, con);
             string userID = Convert.ToString(cmd.ExecuteScalar());

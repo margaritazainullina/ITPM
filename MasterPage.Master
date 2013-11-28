@@ -124,7 +124,7 @@
     &nbsp;<form id="form1" runat="server">
         <div id="allContent">
             <asp:ContentPlaceHolder ID="HolderHeader" runat="server">
-                <div class="title">&nbsp;</div>
+                <div class="title">Книжный клуб</div>
             </asp:ContentPlaceHolder>
 
             <div id="menu">
@@ -139,7 +139,6 @@
             </div>
 
             <div class="wrapper">
-
                 <div class="content">
                     <div class="contentTitle">
                         <asp:ContentPlaceHolder ID="contentTitlePlaceHolder" runat="server"></asp:ContentPlaceHolder>
@@ -156,11 +155,8 @@
                             <asp:ContentPlaceHolder ID="sidePanelTitleContentPlaceHolder" runat="server">
                             </asp:ContentPlaceHolder>
                         </div>
-                        <br />
-                        <br />
 
-                        <asp:LoginName ID="LoginName1" runat="server" FormatString="Welcome, {0}" Visible="False" />
-
+                        <asp:LoginName ID="LoginName1" runat="server" FormatString="Welcome, {0}" Visible="False" Font-Names="Segoe WP SemiLight" />
                         <br />
                         <asp:Label ID="Rating" runat="server" Text="Label" Visible="False"></asp:Label>
                         <br />
@@ -173,16 +169,11 @@
                         <br />
                         <asp:Button ID="Exit" runat="server" Text="Выход" Visible="False" OnClick="Exit_Click" />
                         <br />
-                        <asp:Label ID="ErrorLb" runat="server" Width="300" ForeColor="Red"></asp:Label><br />
+                        <asp:Label ID="ErrorLb" runat="server" Width="300" ForeColor="Red"></asp:Label>
 
-                        <asp:Login ID="Login1" runat="server" Height="192px" Style="font-size: medium" Width="308px"
+                        <asp:Login ID="Login1" runat="server" Height="192px" Style="font-size: medium"
                             OnAuthenticate="Login1_Authenticate">
                         </asp:Login>
-                        <br />
-                        <br />
-                        <hr />
-
-                        <br />
 
                         <asp:ContentPlaceHolder ID="sidePanelContentPlaceHolder" runat="server"></asp:ContentPlaceHolder>
                     </div>
@@ -193,6 +184,8 @@
             <asp:ContentPlaceHolder ID="FooterPlaceHolder" runat="server">
                 <footer>
                     <div class="footerContent">
+                        Книжный клуб, 2013<br />
+                        Все права защищены
                     </div>
                 </footer>
             </asp:ContentPlaceHolder>
