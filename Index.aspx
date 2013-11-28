@@ -11,7 +11,7 @@
 <asp:Content ID="content" ContentPlaceHolderID="contentPlaceHolder" runat="server">
     
     <div>
-    
+        <asp:Label ID="TxtLabel" runat="server"></asp:Label>
     </div>
  
 

@@ -126,7 +126,19 @@ public partial class AddBook : System.Web.UI.Page
             TxtAuthor.Text = "";
             TxtInfo.Text = "";
             File.Text = "";
+
             //FileUpload1.FileName. = "";
+           //изменить рейтинг
+            
+            sqlUserName = "Select rating FROM [User] WHERE login ='" + Session["UserAuthentication"].ToString() + "'";
+            cmd = new System.Data.SqlClient.SqlCommand(sqlUserName, con);
+            string CurrentRating = Convert.ToString(cmd.ExecuteScalar());
+
+            String strsession1 = "update [user] SET rating=" + Convert.ToString(Convert.ToInt32(CurrentRating) + 1) + " WHERE login ='" + Session["UserAuthentication"].ToString() + "'";
+            cmd = new SqlCommand(strsession1, Conn);
+            cmd.ExecuteNonQuery();
+            Conn.Close();
+            Response.Redirect("AddBook.aspx");
         }
         else
         {

@@ -66,17 +66,49 @@ public partial class Search : System.Web.UI.Page
         System.Data.SqlClient.SqlConnection con = new System.Data.SqlClient.SqlConnection(s);
         con.Open();
         string sqlUserName;
-        sqlUserName = "Select Id_category FROM [category] WHERE (category =N'" + CatList.Text + "')";
+        sqlUserName = "SELECT Id_category FROM [category] WHERE (category =N'" + CatList.Text + "')";
         System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand(sqlUserName, con);
         string CurrentCategory = Convert.ToString(cmd.ExecuteScalar());
 
         string strSQLconnection = @"Data Source=(LocalDB)\v11.0;AttachDbFilename=|DataDirectory|\Book_Share.mdf;Integrated Security=True";
         SqlConnection Conn = new SqlConnection(strSQLconnection);
-        SqlCommand commandString = new SqlCommand("SELECT [Book].name,[Book].publishing,[Book].author, [Book].book_url  FROM [Book] INNER JOIN ([User] INNER JOIN ([Book_user] INNER JOIN ([category] INNER JOIN [Book_category] ON [category].Id_category = [Book_category].id_category) ON [Book_user].book_idbook = [Book_category].id_book) ON [User].Id_user= [Book_user].user_iduser) ON [Book].Id_book= [Book_user].book_idbook WHERE ((Book_category.id_category=" + CurrentCategory + ") And ([Book].publishing like '%" + Publishing.Text + "%')And ([Book].author like '%" + Author.Text + "%') And ([Book].name like '%" + Name.Text + "%'));", Conn);
+        SqlCommand commandString = new SqlCommand("SELECT [Book].Id_book,[Book].name,[Book].publishing,[Book].author, [Book].book_url  FROM [Book] INNER JOIN ([User] INNER JOIN ([Book_user] INNER JOIN ([category] INNER JOIN [Book_category] ON [category].Id_category = [Book_category].id_category) ON [Book_user].book_idbook = [Book_category].id_book) ON [User].Id_user= [Book_user].user_iduser) ON [Book].Id_book= [Book_user].book_idbook WHERE ((Book_category.id_category=" + CurrentCategory + ") AND ([Book].publishing like '%" + Publishing.Text + "%')AND ([Book].author like '%" + Author.Text + "%') AND ([Book].name like '%" + Name.Text + "%'))", Conn);
         SqlDataAdapter da = new SqlDataAdapter(commandString);
         DataSet ds = new DataSet();
         da.Fill(ds);
         GridView1.DataSource = ds;
+        GridView1.DataSourceID = "";
         GridView1.DataBind();
+    }
+
+
+
+    protected void LinkButton1_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            string Path = DetailsView1.Rows[1].Cells[1].Text;
+            Response.AppendHeader("Content-Disposition", "attachment; filename=" + Path);
+            State.Text = "Вы успешно загрузили книгу";
+            string s = @"Data Source=(LocalDB)\v11.0;AttachDbFilename=|DataDirectory|\Book_Share.mdf;Integrated Security=True";
+            System.Data.SqlClient.SqlConnection con = new System.Data.SqlClient.SqlConnection(s);
+            con.Open();
+            string sqlUserName; 
+            sqlUserName = "Select rating FROM [User] WHERE login ='" + Session["UserAuthentication"].ToString() + "'";
+            System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand(sqlUserName, con);
+            string CurrentRating = Convert.ToString(cmd.ExecuteScalar());
+            Label Rating = Master.FindControl("Rating") as Label;
+            Rating.Visible = true;
+            Rating.Text = "Ваш рейтинг=" + Convert.ToString(Convert.ToInt32(CurrentRating)-1);
+            String strsession1 = "update [user] SET rating=" + Convert.ToString(Convert.ToInt32(CurrentRating) - 1) + " WHERE login ='" + Session["UserAuthentication"].ToString() + "'";
+            cmd = new SqlCommand(strsession1, con);
+            cmd.ExecuteNonQuery();
+            con.Close();
+            //Response.Redirect("Search.aspx");
+        }
+        catch(Exception ex) 
+        {
+            State.Text = "Не удалось загрузить!!!";
+        }
     }
 }
