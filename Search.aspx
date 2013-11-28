@@ -37,7 +37,7 @@
         </asp:GridView>
         <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString1 %>" SelectCommand="SELECT [name], [author], [publishing], [book_url], [Id_book] FROM [Book]"></asp:SqlDataSource>
         <br />
-        <asp:DetailsView ID="DetailsView1" runat="server" AutoGenerateRows="False" DataKeyNames="Id_book" DataSourceID="SqlDataSource2" Height="50px" Width="125px">
+        <asp:DetailsView ID="DetailsView1" runat="server" AutoGenerateRows="False" DataKeyNames="Id_book" DataSourceID="SqlDataSource2" Height="50px" Width="125px" OnDataBound="DetailsView1_DataBound">
             <Fields>
                 <asp:BoundField DataField="name" HeaderText="name" SortExpression="name" />
                 <asp:BoundField DataField="book_url" HeaderText="book_url" SortExpression="book_url" />

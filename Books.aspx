@@ -41,7 +41,7 @@
 
     <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString1 %>" SelectCommand="SELECT [Id_book], [name], [author], [publishing], [book_url] FROM [Book]"></asp:SqlDataSource>
     <br />
-    <asp:DetailsView ID="DetailsView1" runat="server" AutoGenerateRows="False" DataKeyNames="Id_book" DataSourceID="SqlDataSource2" Height="50px" Width="125px">
+    <asp:DetailsView ID="DetailsView1" runat="server" AutoGenerateRows="False" DataKeyNames="Id_book" DataSourceID="SqlDataSource2" Height="50px" Width="125px" OnDataBound="DetailsView1_DataBound">
         <Fields>
             <asp:BoundField DataField="Id_book" HeaderText="Id_book" InsertVisible="False" ReadOnly="True" SortExpression="Id_book" Visible="False" />
             <asp:BoundField DataField="name" HeaderText="name" SortExpression="name" />
@@ -54,7 +54,7 @@
         </SelectParameters>
     </asp:SqlDataSource>
     <br />
-        <asp:LinkButton ID="LinkButton1" runat="server" OnClick="LinkButton1_Click">Скачать файл</asp:LinkButton>
+        <asp:LinkButton ID="LinkButton1" runat="server" OnClick="LinkButton1_Click" Visible="False">Скачать файл</asp:LinkButton>
         <br />
         <asp:Label ID="State" runat="server"></asp:Label>
          

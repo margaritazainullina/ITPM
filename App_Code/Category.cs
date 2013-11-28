@@ -29,7 +29,7 @@ public class Category
                 add(cat, parent, c);
             }
     }
-
+ 
     public String print(Category root)
     {
         //вместо Console.WriteLine(root.name + " - " + root.parent);
@@ -40,14 +40,17 @@ public class Category
         //and category.id_category=book_category.id_category
         //and category.category=root
 
-        if (root.name == "") xml += "<All_Books>";
+        if (root.name == "")
+        {
+            xml += "<Все_книги_сайта>";
+                  }
         else xml += "<" + root.name + ">";
         Console.WriteLine(root.name + " - " + root.parent);
         foreach (Category c in root.subCategories)
         {
             print(c);
         }
-        if (root.name == "") xml += "</All_Books>"; 
+        if (root.name == "") xml += "</Все_книги_сайта>"; 
         else xml += "</" + root.name + ">";
         return xml;
     }
