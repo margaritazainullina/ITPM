@@ -20,60 +20,60 @@
             AdminPanelButton.Visible = true;
         }
     }
-    
+
 
     protected void Login1_Authenticate(object sender, AuthenticateEventArgs e)
     {
-       
-            string username = Login1.UserName;
-            string pwd = Login1.Password;
-            string s;
-            s = @"Data Source=(LocalDB)\v11.0;AttachDbFilename=|DataDirectory|\Book_Share.mdf;Integrated Security=True";
-            System.Data.SqlClient.SqlConnection con = new System.Data.SqlClient.SqlConnection(s);
-            con.Open();
-            string sqlUserName;
-            sqlUserName = "SELECT login,password,rating  FROM [User] WHERE login ='" + username + "' AND password ='" + pwd + "'";
-            System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand(sqlUserName, con);
-            string CurrentName;
-            CurrentName = (string)cmd.ExecuteScalar();
-        // пользователь есть в бд    
-            if (CurrentName != null)
-            {
-                Session["UserAuthentication"] = username;
-                Session.Timeout = 1;
-                Login1.Visible = false;
-                StatusLb.Visible = false;
-                LoginName1.Visible = true;
-                LoginName1.FormatString = "Welcome, " + Session["UserAuthentication"].ToString();
-                Exit.Visible = true;
-                Registration.Visible = false;
-                //если зашел админ
-                if (Session["UserAuthentication"].ToString().CompareTo("admin") == 0)
-                {
-                    AdminPanelButton.Visible = true;
-                }
-                else
-                {
-                    UserPanelButton.Visible = true;
-                }
-                //сделать отображение рейтинга
-                sqlUserName = "Select rating FROM [User] WHERE login ='" + username + "'";
-                cmd = new System.Data.SqlClient.SqlCommand(sqlUserName, con);
-                CurrentName = Convert.ToString(cmd.ExecuteScalar());
-                if (CurrentName != null)
-                {
-                    Rating.Text = "Ваш рейтинг=" + CurrentName;
-                    Rating.Visible = true;
-                }
-            }
 
+        string username = Login1.UserName;
+        string pwd = Login1.Password;
+        string s;
+        s = @"Data Source=(LocalDB)\v11.0;AttachDbFilename=|DataDirectory|\Book_Share.mdf;Integrated Security=True";
+        System.Data.SqlClient.SqlConnection con = new System.Data.SqlClient.SqlConnection(s);
+        con.Open();
+        string sqlUserName;
+        sqlUserName = "SELECT login,password,rating  FROM [User] WHERE login ='" + username + "' AND password ='" + pwd + "'";
+        System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand(sqlUserName, con);
+        string CurrentName;
+        CurrentName = (string)cmd.ExecuteScalar();
+        // пользователь есть в бд    
+        if (CurrentName != null)
+        {
+            Session["UserAuthentication"] = username;
+            Session.Timeout = 1;
+            Login1.Visible = false;
+            StatusLb.Visible = false;
+            LoginName1.Visible = true;
+            LoginName1.FormatString = "Welcome, " + Session["UserAuthentication"].ToString();
+            Exit.Visible = true;
+            Registration.Visible = false;
+            //если зашел админ
+            if (Session["UserAuthentication"].ToString().CompareTo("admin") == 0)
+            {
+                AdminPanelButton.Visible = true;
+            }
             else
             {
-                //Session["UserAuthentication"] = "";
-                StatusLb.Text = "Вы не зарегистрированы либо не верно ввели данные!!! Повторите ввод или нажмите кнопку регистрации";
+                UserPanelButton.Visible = true;
             }
-        
-       
+            //сделать отображение рейтинга
+            sqlUserName = "Select rating FROM [User] WHERE login ='" + username + "'";
+            cmd = new System.Data.SqlClient.SqlCommand(sqlUserName, con);
+            CurrentName = Convert.ToString(cmd.ExecuteScalar());
+            if (CurrentName != null)
+            {
+                Rating.Text = "Ваш рейтинг=" + CurrentName;
+                Rating.Visible = true;
+            }
+        }
+
+        else
+        {
+            //Session["UserAuthentication"] = "";
+            StatusLb.Text = "Вы не зарегистрированы либо не верно ввели данные!!! Повторите ввод или нажмите кнопку регистрации";
+        }
+
+
     }
 
     protected void Button1_Click(object sender, EventArgs e)
@@ -85,7 +85,7 @@
 
     protected void Button2_Click(object sender, EventArgs e)
     {
-        
+
         Response.Redirect("AdminPanel.aspx");
     }
 
@@ -96,13 +96,13 @@
 
     protected void Exit_Click(object sender, EventArgs e)
     {
-        
+
         Login1.Visible = true;
         StatusLb.Visible = true;
         Registration.Visible = true;
         LoginName1.Visible = false;
         Rating.Visible = false;
-        Session["UserAuthentication"]=null;
+        Session["UserAuthentication"] = null;
         Response.Redirect("Index.aspx");
     }
 </script>
@@ -149,7 +149,7 @@
                 </div>
 
                 <div class="sidePanel" onload="Load()">
-
+                    <br />
                     <div class="sidePanelСontent" onload="Load">
                         <div class="sidePanelTitle" onload="Load()">
                             <asp:ContentPlaceHolder ID="sidePanelTitleContentPlaceHolder" runat="server">
