@@ -12,7 +12,7 @@ public partial class Index : System.Web.UI.Page
         if (Session["UserAuthentication"] != null)
         {
 
-            TxtLabel.Text = "Приветствуем вас на нашем сайте";
+           // TxtLabel.Text = "Приветствуем вас на нашем сайте";
             LoginName LoginName1 = Master.FindControl("LoginName1") as LoginName;
             LoginName1.Visible = true;
             LoginName1.FormatString = "Welcome, " + Session["UserAuthentication"].ToString();
@@ -44,4 +44,6 @@ public partial class Index : System.Web.UI.Page
             TxtLabel.Text = "Приветствуем вас на нашем сайте";
         }
     }
+   
+
 }

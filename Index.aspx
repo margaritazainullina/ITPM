@@ -1,5 +1,7 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/MasterPage.Master" CodeFile="Index.aspx.cs" Inherits="Index" %>
 
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
+
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <title>Главная страница</title>
@@ -12,7 +14,7 @@
     <div class="contentTitle">Здравствуйте!</div>
     <div>
         <asp:Label ID="TxtLabel" runat="server"></asp:Label>
-    </div>
- 
 
+
+    </div>
 </asp:Content> 
