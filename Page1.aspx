@@ -47,7 +47,6 @@
                         <br />
                         <asp:Image ID="userPhoto" runat="server" Height="107px" Width="114px" />
                         <br />
-                        <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
                         <br />
 
                         <br />
